@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooknestAPI", "BooknestAPI.csproj", "{E346E53E-B199-4EEE-B381-961E65B92827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\DAL\DAL.csproj", "{118A6B48-C81E-4D5C-82BD-4EED11B33865}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "..\DAL\DAL.csproj", "{118A6B48-C81E-4D5C-82BD-4EED11B33865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "..\BLL\BLL.csproj", "{7C6E14FE-CA1A-4493-AC65-1A790227185C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "..\BLL\BLL.csproj", "{7C6E14FE-CA1A-4493-AC65-1A790227185C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests_BE", "..\UnitTests_BE\UnitTests_BE.csproj", "{8D23A549-5E04-458A-AAC8-EEE7237161DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooknestAPI.Tests", "..\UnitTests_BE\BooknestAPI.Tests.csproj", "{8D23A549-5E04-458A-AAC8-EEE7237161DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
