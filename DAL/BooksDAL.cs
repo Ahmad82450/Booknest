@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using CL.DTO;
 using CL.DALInterface;
+using System.Data;
 
 namespace DAL
 {
@@ -30,7 +31,11 @@ namespace DAL
                 {
                     BooksDTO book = new BooksDTO
                     {
-
+                        bookID = myReader.GetInt32("bookID"),
+                        bookName = myReader.GetString("bookName"),
+                        bookDescription = myReader.GetString("bookDescription"),
+                        bookAuthor = myReader.GetString("bookAuthor"),
+                        bookISBN = myReader.GetInt32("bookISBN")
                     };
                     books.Add(book);
 
