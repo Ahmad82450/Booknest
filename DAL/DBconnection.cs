@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DBconnection : IDBConnection
     {
-        private string connectionString = "server=localhost;port=3306;database=proftaaksemester2;user=root;password=";
+        private string connectionString = "server=localhost;port=3306;database=Booknest;user=root;password=";
 
         public MySqlConnection connection { get; private set; }
 

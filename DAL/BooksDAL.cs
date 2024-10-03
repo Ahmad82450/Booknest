@@ -6,7 +6,7 @@ using System.Data;
 
 namespace DAL
 {
-    public class BooksDAL : IBooksDAL
+    public class BooksDAL : IBooksRepository
     {
         public readonly IDBConnection _conn;
         public BooksDAL(IDBConnection conn) 
@@ -28,11 +28,11 @@ namespace DAL
                     {
                         BooksDTO book = new BooksDTO
                         {
-                            bookID = myReader.GetInt32("bookID"),
-                            bookName = myReader.GetString("bookName"),
+                            bookID = myReader.GetInt32("bookid"),
+                            bookName = myReader.GetString("bookname"),
                             bookDescription = myReader.GetString("bookDescription"),
                             bookAuthor = myReader.GetString("bookAuthor"),
-                            bookISBN = myReader.GetInt32("bookISBN")
+                            bookISBN = myReader.GetString("bookISBN")
                         };
                         books.Add(book);
 
