@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CL.DTO
+namespace BLL.Models
 {
-    public class BooksDTO
+    public class Book
     {
         public int bookID { get; set; }
         public string bookName { get; set; }

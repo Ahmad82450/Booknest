@@ -7,7 +7,7 @@ using CL.DTO;
 
 namespace CL.DALInterface
 {
-    public interface IBooksDAL
+    public interface IBooksRepository
     {
         public List<BooksDTO> GetAllBooks();
     }

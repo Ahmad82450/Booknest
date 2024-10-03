@@ -1,8 +1,18 @@
+using System.Data;
+using BLL;
+using DAL;
+using CL.DALInterface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddTransient<IDBConnection, DBconnection>();
+builder.Services.AddTransient<IBooksRepository, BooksDAL>();
+builder.Services.AddTransient<BooksService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
