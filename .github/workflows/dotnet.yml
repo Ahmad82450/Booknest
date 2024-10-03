@@ -20,12 +20,12 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: BooknestAPI/BooknestAPI.sln
+      working-directory: BooknestAPI
 
     - name: Build
       run: dotnet build --no-restore
-      working-directory: BooknestAPI/BooknestAPI.csproj
+      working-directory: BooknestAPI
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: BooknestAPI/BooknestAPI.csproj
+      working-directory: BooknestAPI
