@@ -1,34 +1,29 @@
-name: Build and Deploy ASP.NET Core API
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.x' # Set the version of .NET you are using
-
+        dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore BooknestAPI/BooknestAPI.sln # Add the correct path here
-
-    - name: Build the solution
-      run: dotnet build BooknestAPI/BooknestAPI.sln --configuration Release --no-restore
-
-    - name: Run tests
-      run: dotnet test BooknestAPI/BooknestAPI.csproj --no-restore --verbosity normal
-
-    - name: Publish the API
-      run: dotnet publish BooknestAPI/BooknestAPI.csproj --configuration Release --output ./publish
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
