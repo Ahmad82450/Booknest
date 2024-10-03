@@ -22,16 +22,16 @@ jobs:
         dotnet-version: '8.x' # Set the version of .NET you are using
 
     - name: Restore dependencies
-      run: dotnet restore BooknestAPI/BooknestAPI.sln # Add the correct path here
+      run: dotnet restore src/BooknestAPI.sln # Add the correct path here
 
     - name: Build the solution
-      run: dotnet build BooknestAPI/BooknestAPI.sln --configuration Release --no-restore
+      run: dotnet build src/BooknestAPI.sln --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test BooknestAPI/BooknestAPI.csproj --no-restore --verbosity normal
+      run: dotnet test src/BooknestAPI.csproj --no-restore --verbosity normal
 
     - name: Publish the API
-      run: dotnet publish BooknestAPI/BooknestAPI.csproj --configuration Release --output ./publish
+      run: dotnet publish src/BooknestAPI.csproj --configuration Release --output ./publish
 
   deploy:
     runs-on: ubuntu-latest
