@@ -19,18 +19,6 @@ namespace BLL
         {
             var booksDTO = _booksDAL.GetAllBooks();
             var books = _mapper.Map<List<Book>>(booksDTO);
-            //foreach (var Itembook in _booksDAL.GetAllBooks())
-            //{
-            //    Book book = new Book
-            //    {
-            //        bookID = Itembook.bookID,
-            //        bookName = Itembook.bookName,
-            //        bookDescription = Itembook.bookDescription,
-            //        bookAuthor = Itembook.bookAuthor,
-            //        bookISBN = Itembook.bookISBN,
-            //    };
-            //    books.Add(book);
-            //}
             Console.WriteLine(books);
             return books;
         }
