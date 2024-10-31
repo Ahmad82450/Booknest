@@ -5,7 +5,7 @@ using CL.DALInterface;
 
 namespace BooknestAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [ApiController]
     public class GetBooksController : ControllerBase
     {
@@ -19,6 +19,17 @@ namespace BooknestAPI.Controllers
         public IEnumerable<BLL.Models.Book> Get()
         {
             return _booksService.GetAllBooks();
+        }
+
+        [HttpGet("{bookID}", Name = "GetBookInfo")]
+        public ActionResult<BLL.Models.Book> Get(int bookID)
+        {
+            var book = _booksService.GetBook(bookID);
+            if (book == null) 
+            {
+                return NotFound();
+            }
+            return Ok(book);
         }
     }
 }

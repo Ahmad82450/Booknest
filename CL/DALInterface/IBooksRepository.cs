@@ -10,5 +10,6 @@ namespace CL.DALInterface
     public interface IBooksRepository
     {
         public List<BooksDTO> GetAllBooks();
+        public BooksDTO GetBook(int bookID);
     }
 }

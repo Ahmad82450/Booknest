@@ -22,5 +22,13 @@ namespace BLL
             Console.WriteLine(books);
             return books;
         }
+
+        public Book GetBook(int bookID) 
+        {
+            var bookDTO = _booksDAL.GetBook(bookID);
+            var book = _mapper.Map<Book>(bookDTO);
+            return book;
+
+        }
     }
 }
