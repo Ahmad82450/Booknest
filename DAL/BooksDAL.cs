@@ -86,49 +86,5 @@ namespace DAL
             return book;
         }
 
-        //public BooksDTO GetBook(int bookID)
-        //{
-        //    BooksDTO book = new();
-        //    try
-        //    {
-        //        _conn.Open();
-        //        string query = "SELECT * FROM `Books` WHERE `bookID` = @bookID;";
-        //        IDBCommandWrapper cmd = _conn.CreateCommand(query);
-        //        cmd.Parameters.AddWithValue("@bookID", bookID);
-
-        //        using (MySqlDataReader myReader = cmd.ExecuteReader())
-        //        {
-        //            if (myReader.HasRows)
-        //            {
-        //                myReader.Read();
-        //                book = new BooksDTO
-        //                {
-        //                    bookID = myReader.GetInt32("bookID"),
-        //                    bookName = myReader.GetString("bookName"),
-        //                    bookDescription = myReader.GetString("bookDescription"),
-        //                    bookAuthor = myReader.GetString("bookAuthor"),
-        //                    bookISBN = myReader.GetString("bookISBN")
-        //                };
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("No book found with the specified ID.");
-        //            }
-        //        }
-
-        //        Console.WriteLine(book);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.ToString());
-        //    }
-        //    finally
-        //    {
-        //        _conn.Close();
-        //    }
-
-        //    return book;
-        //}
-
     }
 }
