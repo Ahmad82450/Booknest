@@ -13,6 +13,8 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddTransient<IDBConnection, DBconnection>();
 builder.Services.AddTransient<IBooksRepository, BooksDAL>();
 builder.Services.AddTransient<BooksService>();
+builder.Services.AddTransient<IReviewRepository, ReviewsDAL>();
+builder.Services.AddTransient<ReviewsService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
