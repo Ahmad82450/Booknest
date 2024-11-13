@@ -58,5 +58,48 @@ namespace BooknestAPI.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual("Review submitted successfully.", result);
         }
+
+        [TestMethod]
+        public void Insert_review_Fail()
+        {
+            // Arrange
+            var mockUserDAL = new Mock<IReviewRepository>();
+            var mockMapper = new Mock<IMapper>();
+
+            //User Input
+            var review = new Reviews
+            {
+                reviewText = "test",
+                bookID = 1,
+                userID = 1,
+            };
+
+            //Service Data
+            var reviewModel = new Review
+            {
+                reviewText = review.reviewText,
+                bookID = review.bookID,
+                userID = review.userID,
+            };
+
+            //Database inserted data
+            var reviewDTO = new ReviewDTO
+            {
+                reviewText = reviewModel.reviewText,
+                bookID = reviewModel.bookID,
+                userID = reviewModel.userID,
+            };
+
+            mockUserDAL.Setup(dal => dal.InsertReview(It.IsAny<ReviewDTO>())).Returns((false, "Something wrong happened try again later"));
+            mockMapper.Setup(mapper => mapper.Map<ReviewDTO>(reviewModel)).Returns(reviewDTO);
+
+            var reviewsService = new ReviewsService(mockUserDAL.Object, mockMapper.Object);
+
+            var result = reviewsService.InsertReview(reviewModel);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Failed to submit review", result);
+        }
     }
 }
