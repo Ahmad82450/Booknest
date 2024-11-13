@@ -24,7 +24,7 @@ namespace BLL
             var (isSuccess, message) = _reviewsDAL.InsertReview(reviewDTO);
 
             // Return a message based on the result of the DAL operation
-            return isSuccess ? "Review submitted successfully." : $"Failed to submit review: {message}";
+            return isSuccess ? "Review submitted successfully." : $"Failed to submit review";
         }
     }
 }

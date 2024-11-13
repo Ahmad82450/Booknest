@@ -35,7 +35,7 @@ namespace DAL
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return (false, "Something wrong happened try later");
+                return (false, "Something wrong happened try again later");
             }
 
             finally { _conn.Close(); }
