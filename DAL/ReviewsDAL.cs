@@ -31,18 +31,25 @@ namespace DAL
 
                 return (true, "Thanks for your review!!");
             }
-
+            catch (MySqlException sqlEx)
+            {
+                // Log SQL-specific error
+                Console.WriteLine($"Database error occurred: {sqlEx.Message}");
+                return (false, "Database error occurred. Please try again later.");
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return (false, "Something wrong happened try again later");
+                // Log general error
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return (false, "Something went wrong. Please try again later.");
             }
-
-            finally { _conn.Close(); }
-
+            finally
+            {
+                _conn.Close(); // Ensure connection is closed
+            }
         }
 
-        public (bool ,List<ReviewDTO>) GetAllReviews() 
+        public (bool, List<ReviewDTO>) GetAllReviews()
         {
             List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
             try
@@ -50,11 +57,12 @@ namespace DAL
                 _conn.Open();
                 string query = "SELECT * FROM `reviews`";
                 IDBCommandWrapper cmd = _conn.CreateCommand(query);
+
                 using (MySqlDataReader myReader = cmd.ExecuteReader())
                 {
                     while (myReader.Read())
                     {
-                        ReviewDTO reviewDTO = new()
+                        ReviewDTO reviewDTO = new ReviewDTO
                         {
                             reviewText = myReader.GetString("reviewText"),
                             userID = myReader.GetInt32("userID"),
@@ -62,17 +70,26 @@ namespace DAL
                         };
                         reviewDTOs.Add(reviewDTO);
                     }
-
                 }
 
                 return (true, reviewDTOs);
             }
-            catch (Exception ex) 
+            catch (MySqlException sqlEx)
             {
+                // Log SQL-specific error
+                Console.WriteLine($"Database error occurred: {sqlEx.Message}");
                 return (false, new List<ReviewDTO>());
             }
-
-            finally { _conn.Close(); }
+            catch (Exception ex)
+            {
+                // Log general error
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return (false, new List<ReviewDTO>());
+            }
+            finally
+            {
+                _conn.Close();
+            }
         }
     }
 }
