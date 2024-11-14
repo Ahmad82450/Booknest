@@ -26,5 +26,20 @@ namespace BLL
             // Return a message based on the result of the DAL operation
             return isSuccess ? "Review submitted successfully." : $"Failed to submit review";
         }
+
+        public List<Review> GetAllReviewsService()
+        {
+            var (isSuccess, ReviewsDAL) = _reviewsDAL.GetAllReviews();
+            var reviews = _mapper.Map<List<Review>>(ReviewsDAL);
+
+            if (isSuccess) 
+            {
+                return reviews;
+            }
+            else
+            {
+                return new List<Review>();
+            }
+        }
     }
 }

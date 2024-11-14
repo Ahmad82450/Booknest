@@ -41,5 +41,38 @@ namespace DAL
             finally { _conn.Close(); }
 
         }
+
+        public (bool ,List<ReviewDTO>) GetAllReviews() 
+        {
+            List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
+            try
+            {
+                _conn.Open();
+                string query = "SELECT * FROM `reviews`";
+                IDBCommandWrapper cmd = _conn.CreateCommand(query);
+                using (MySqlDataReader myReader = cmd.ExecuteReader())
+                {
+                    while (myReader.Read())
+                    {
+                        ReviewDTO reviewDTO = new()
+                        {
+                            reviewText = myReader.GetString("reviewText"),
+                            userID = myReader.GetInt32("userID"),
+                            bookID = myReader.GetInt32("bookID"),
+                        };
+                        reviewDTOs.Add(reviewDTO);
+                    }
+
+                }
+
+                return (true, reviewDTOs);
+            }
+            catch (Exception ex) 
+            {
+                return (false, new List<ReviewDTO>());
+            }
+
+            finally { _conn.Close(); }
+        }
     }
 }

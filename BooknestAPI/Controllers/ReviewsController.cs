@@ -41,5 +41,33 @@ namespace BooknestAPI.Controllers
             // Assuming the save is successful, return a success response
             return Ok(new { message = "Review submitted successfully." });
         }
+
+        [HttpGet(Name = "GetReviews")]
+        public IActionResult Get()
+        {
+            try
+            {
+                List<Reviews> reviews = new List<Reviews>();
+
+                foreach (var item in _reviewsService.GetAllReviewsService())
+                {
+                    Reviews review = new Reviews
+                    {
+                        reviewText = item.reviewText,
+                        bookID = item.bookID,
+                        userID = item.userID,
+                    };
+
+                    reviews.Add(review);
+                }
+
+                return Ok(reviews); // Returns 200 OK status with the list of reviews
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
