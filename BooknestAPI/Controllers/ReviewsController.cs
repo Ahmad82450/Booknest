@@ -23,23 +23,32 @@ namespace BooknestAPI.Controllers
         [HttpPost("SubmitReview")]
         public IActionResult SubmitReview([FromBody] Reviews review)
         {
-            if (review == null)
+            try
             {
-                return BadRequest("Review data is null.");
+                if (review == null)
+                {
+                    return BadRequest("Review data is null.");
+                }
+
+                var ReviewModel = new Review
+                {
+                    userID = review.userID,
+                    reviewText = review.reviewText,
+                    bookID = review.bookID,
+                };
+                _reviewsService.InsertReview(ReviewModel);
+
+                Console.WriteLine(review);
+
+                // Assuming the save is successful, return a success response
+                return Ok(new { message = "Review submitted successfully." });
             }
 
-            var ReviewModel = new Review
+            catch (Exception ex) 
             {
-                userID = review.userID,
-                reviewText = review.reviewText,
-                bookID = review.bookID,
-            };
-            _reviewsService.InsertReview(ReviewModel);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
 
-            Console.WriteLine(review);
-
-            // Assuming the save is successful, return a success response
-            return Ok(new { message = "Review submitted successfully." });
         }
 
         [HttpGet(Name = "GetReviews")]
