@@ -10,6 +10,6 @@ namespace CL.DALInterface
     public interface IReviewRepository
     {
         public (bool, string) InsertReview(ReviewDTO review);
-        public (bool, List<ReviewDTO>) GetAllReviews();
+        public (bool, List<ReviewDTO>) GetBookReview(int bookID);
     }
 }
