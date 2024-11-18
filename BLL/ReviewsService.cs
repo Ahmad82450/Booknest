@@ -27,9 +27,9 @@ namespace BLL
             return isSuccess ? "Review submitted successfully." : $"Failed to submit review";
         }
 
-        public List<Review> GetAllReviewsService()
+        public List<Review> GetBookReviewsService(int bookID)
         {
-            var (isSuccess, ReviewsDAL) = _reviewsDAL.GetAllReviews();
+            var (isSuccess, ReviewsDAL) = _reviewsDAL.GetBookReview(bookID);
             var reviews = _mapper.Map<List<Review>>(ReviewsDAL);
 
             if (isSuccess) 

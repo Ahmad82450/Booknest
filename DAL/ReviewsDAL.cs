@@ -49,14 +49,15 @@ namespace DAL
             }
         }
 
-        public (bool, List<ReviewDTO>) GetAllReviews()
+        public (bool, List<ReviewDTO>) GetBookReview(int bookID)
         {
             List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
             try
             {
                 _conn.Open();
-                string query = "SELECT * FROM `reviews`";
+                string query = "SELECT * FROM `reviews` WHERE `bookID` = @bookID;";
                 IDBCommandWrapper cmd = _conn.CreateCommand(query);
+                cmd.ParametersAddWithValue("@bookID", bookID);
 
                 using (MySqlDataReader myReader = cmd.ExecuteReader())
                 {
@@ -64,6 +65,7 @@ namespace DAL
                     {
                         ReviewDTO reviewDTO = new ReviewDTO
                         {
+                            reviewID = myReader.GetInt32("reviewID"),
                             reviewText = myReader.GetString("reviewText"),
                             userID = myReader.GetInt32("userID"),
                             bookID = myReader.GetInt32("bookID"),

@@ -4,6 +4,7 @@ using BLL;
 using AutoMapper;
 using BLL.Models;
 using CL.DTO;
+using System.Net;
 
 
 namespace BooknestAPI.Controllers
@@ -44,24 +45,25 @@ namespace BooknestAPI.Controllers
                 return Ok(new { message = "Review submitted successfully." });
             }
 
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
 
         }
 
-        [HttpGet(Name = "GetReviews")]
-        public IActionResult Get()
+        [HttpGet("{bookID}", Name = "GetReviews")]
+        public IActionResult Get(int bookID)
         {
             try
             {
                 List<Reviews> reviews = new List<Reviews>();
 
-                foreach (var item in _reviewsService.GetAllReviewsService())
+                foreach (var item in _reviewsService.GetBookReviewsService(bookID))
                 {
                     Reviews review = new Reviews
                     {
+                        reviewID = item.reviewID,
                         reviewText = item.reviewText,
                         bookID = item.bookID,
                         userID = item.userID,
