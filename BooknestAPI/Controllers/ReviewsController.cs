@@ -67,6 +67,7 @@ namespace BooknestAPI.Controllers
                         reviewText = item.reviewText,
                         bookID = item.bookID,
                         userID = item.userID,
+                        userName = item.userName,
                     };
 
                     reviews.Add(review);

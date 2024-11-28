@@ -55,7 +55,7 @@ namespace DAL
             try
             {
                 _conn.Open();
-                string query = "SELECT * FROM `reviews` WHERE `bookID` = @bookID;";
+                string query = "SELECT users.userName , reviews.* FROM `reviews` INNER JOIN users ON reviews.userID = users.userID WHERE bookID = @bookID;";
                 IDBCommandWrapper cmd = _conn.CreateCommand(query);
                 cmd.ParametersAddWithValue("@bookID", bookID);
 
@@ -69,6 +69,7 @@ namespace DAL
                             reviewText = myReader.GetString("reviewText"),
                             userID = myReader.GetInt32("userID"),
                             bookID = myReader.GetInt32("bookID"),
+                            userName = myReader.GetString("userName"),
                         };
                         reviewDTOs.Add(reviewDTO);
                     }
