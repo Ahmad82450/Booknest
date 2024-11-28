@@ -12,5 +12,6 @@ namespace CL.DTO
         public string reviewText { get; set; }
         public int bookID { get; set; }
         public int userID { get; set; }
+        public string userName { get; set; }
     }
 }
