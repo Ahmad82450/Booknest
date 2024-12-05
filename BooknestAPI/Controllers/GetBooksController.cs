@@ -21,7 +21,7 @@ namespace BooknestAPI.Controllers
             return _booksService.GetAllBooks();
         }
 
-        [HttpGet("{bookID}", Name = "GetBookInfo")]
+        [HttpGet("{bookID:int}", Name = "GetBookInfo")]
         public ActionResult<BLL.Models.Book> Get(int bookID)
         {
             var book = _booksService.GetBook(bookID);
@@ -30,6 +30,11 @@ namespace BooknestAPI.Controllers
                 return NotFound();
             }
             return Ok(book);
+        }
+        [HttpGet("/searchBook/{searchQuery}", Name = "SearchBooks")]
+        public IEnumerable<BLL.Models.Book> Get(string searchQuery) 
+        {
+            return _booksService.SearchBooks(searchQuery);
         }
     }
 }

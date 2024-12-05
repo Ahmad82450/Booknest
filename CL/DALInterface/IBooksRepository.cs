@@ -11,5 +11,6 @@ namespace CL.DALInterface
     {
         public List<BooksDTO> GetAllBooks();
         public BooksDTO GetBook(int bookID);
+        public List<BooksDTO> SearchBooks(string searchQuery);
     }
 }

@@ -19,7 +19,13 @@ namespace BLL
         {
             var booksDTO = _booksDAL.GetAllBooks();
             var books = _mapper.Map<List<Book>>(booksDTO);
-            Console.WriteLine(books);
+            return books;
+        }
+
+        public List<Book> SearchBooks(string searchQuery) 
+        { 
+            var booksDTO = _booksDAL.SearchBooks(searchQuery);
+            var books = _mapper.Map<List<Book>>(booksDTO);
             return books;
         }
 
@@ -28,7 +34,6 @@ namespace BLL
             var bookDTO = _booksDAL.GetBook(bookID);
             var book = _mapper.Map<Book>(bookDTO);
             return book;
-
         }
     }
 }

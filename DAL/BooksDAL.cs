@@ -9,8 +9,8 @@ namespace DAL
     public class BooksDAL : IBooksRepository
     {
         public readonly IDBConnection _conn;
-        public BooksDAL(IDBConnection conn) 
-        { 
+        public BooksDAL(IDBConnection conn)
+        {
             _conn = conn;
         }
 
@@ -103,5 +103,50 @@ namespace DAL
             return book;
         }
 
+        public List<BooksDTO> SearchBooks(string searchQuery)
+        {
+            List<BooksDTO> books = new List<BooksDTO>();
+            try
+            {
+                _conn.Open();
+                searchQuery = $"{searchQuery}%";
+                string query = "SELECT * FROM Books WHERE bookName LIKE @searchQuery OR bookISBN LIKE @searchQuery;";
+                IDBCommandWrapper cmd = _conn.CreateCommand(query);
+                cmd.ParametersAddWithValue("@searchQuery", searchQuery);
+
+                using (MySqlDataReader myReader = cmd.ExecuteReader())
+                {
+                    while (myReader.Read())
+                    {
+                        BooksDTO book = new BooksDTO
+                        {
+                            bookID = myReader.GetInt32("bookID"),
+                            bookName = myReader.GetString("bookName"),
+                            bookDescription = myReader.GetString("bookDescription"),
+                            bookAuthor = myReader.GetString("bookAuthor"),
+                            bookISBN = myReader.GetString("bookISBN")
+                        };
+                        books.Add(book);
+                    }
+                }
+            }
+            catch (MySqlException sqlEx)
+            {
+                // Log SQL-specific errors here
+                Console.WriteLine($"Database error occurred: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Log general errors
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            finally
+            {
+                _conn.Close(); // Ensure connection is closed
+            }
+
+            return books;
+
+        }
     }
 }
