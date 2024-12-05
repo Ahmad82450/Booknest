@@ -101,5 +101,88 @@ namespace BooknestAPI.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual("Failed to submit review", result);
         }
+
+        [TestMethod]
+        public void GetBookReviewsService_Success()
+        {
+            // Arrange
+            var mockReviewsDAL = new Mock<IReviewRepository>();
+            var mockMapper = new Mock<IMapper>();
+
+            // Mock data for ReviewsDAL
+            var reviewsDAL = new List<ReviewDTO>
+            {
+                new ReviewDTO { reviewID = 1, bookID = 1, reviewText = "Great book!"},
+                new ReviewDTO { reviewID = 2, bookID = 2, reviewText = "Not bad." }
+            };
+
+            var reviews = new List<Review>
+            {
+                new Review { reviewID = 1, bookID = 1, reviewText = "Great book!" },
+                new Review { reviewID = 2, bookID = 1, reviewText = "Not bad."}
+            };
+
+            // Setup mocks
+            mockReviewsDAL.Setup(dal => dal.GetBookReview(It.IsAny<int>())).Returns((true, reviewsDAL));
+            mockMapper.Setup(mapper => mapper.Map<List<Review>>(reviewsDAL)).Returns(reviews);
+
+            var bookService = new ReviewsService(mockReviewsDAL.Object, mockMapper.Object);
+
+            // Act
+            var result = bookService.GetBookReviewsService(1);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("Great book!", result[0].reviewText);
+        }
+
+        [TestMethod]
+        public void GetBookReviewsService_Failure()
+        {
+            // Arrange
+            var mockReviewsDAL = new Mock<IReviewRepository>();
+            var mockMapper = new Mock<IMapper>();
+
+            // Mock data for ReviewsDAL (empty list in case of failure)
+            var reviewsDAL = new List<ReviewDTO>();
+
+            // Setup mocks
+            mockReviewsDAL.Setup(dal => dal.GetBookReview(It.IsAny<int>())).Returns((false, reviewsDAL));
+            mockMapper.Setup(mapper => mapper.Map<List<Review>>(reviewsDAL)).Returns(new List<Review>());
+
+            var bookService = new ReviewsService(mockReviewsDAL.Object, mockMapper.Object);
+
+            // Act
+            var result = bookService.GetBookReviewsService(1);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Count);  // Since isSuccess is false, we expect an empty list.
+        }
+
+        [TestMethod]
+        public void GetBookReviewsService_EmptyReviewsDAL()
+        {
+            // Arrange
+            var mockReviewsDAL = new Mock<IReviewRepository>();
+            var mockMapper = new Mock<IMapper>();
+
+            // Mock empty ReviewsDAL
+            var reviewsDAL = new List<ReviewDTO>();  // Empty list but successful retrieval
+
+            // Setup mocks
+            mockReviewsDAL.Setup(dal => dal.GetBookReview(It.IsAny<int>())).Returns((true, reviewsDAL));
+            mockMapper.Setup(mapper => mapper.Map<List<Review>>(reviewsDAL)).Returns(new List<Review>());
+
+            var bookService = new ReviewsService(mockReviewsDAL.Object, mockMapper.Object);
+
+            // Act
+            var result = bookService.GetBookReviewsService(1);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Count);  // Expect an empty list but no error
+        }
     }
 }
